@@ -199,19 +199,15 @@
                         <div class="number ft-40">3,242</div>
                         <div class="label ft-16 fw-400">Risky Claims identified</div>
                         <div class="bricks my-5">
-                            <div class="brick"></div>
-                            <div class="brick"></div>
-                            <div class="brick"></div>
-                            <div class="brick"></div>
-                            <div class="brick"></div>
-                            <div class="brick"></div>
+
                             <div class="brick brick-highlighted"></div>
                             <div class="brick brick-highlighted"></div>
-                            <div class="brick"></div>
-                            <div class="brick"></div>
-                            <div class="brick"></div>
-                            <div class="brick"></div>
-                            <div class="brick"></div>
+                            <div class="brick brick-highlighted"></div>
+                            <div class="brick brick-highlighted"></div>
+                            <div class="brick brick-highlighted"></div>
+                            <div class="brick brick-highlighted"></div>
+                            <div class="brick brick-highlighted"></div>
+                            <div class="brick  brick-highlighted-half"></div>
                             <div class="brick"></div>
                             <div class="brick"></div>
                         </div>
@@ -228,25 +224,25 @@
 
                         <div class="progress-bars-container my-5">
                             <div class="progress-track" style="height: 60px;">
-                                <div class="progress-fill" style="height: 5%;"></div>
-                            </div>
-                            <div class="progress-track" style="height: 60px;">
                                 <div class="progress-fill" style="height: 10%;"></div>
                             </div>
                             <div class="progress-track" style="height: 60px;">
-                                <div class="progress-fill" style="height: 70%;"></div>
+                                <div class="progress-fill" style="height: 25%;"></div>
+                            </div>
+                            <div class="progress-track" style="height: 60px;">
+                                <div class="progress-fill" style="height: 40%;"></div>
                             </div>
                             <div class="progress-track" style="height: 60px;">
                                 <div class="progress-fill"></div>
                             </div>
                             <div class="progress-track" style="height: 60px;">
-                                <div class="progress-fill" ></div>
+                                <div class="progress-fill"></div>
                             </div>
                             <div class="progress-track" style="height: 60px;">
                                 <div class="progress-fill"></div>
                             </div>
                             <div class="progress-track" style="height: 60px;">
-                                <div class="progress-fill" ></div>
+                                <div class="progress-fill"></div>
                             </div>
                             <div class="progress-track" style="height: 60px;">
                                 <div class="progress-fill"></div>
@@ -260,7 +256,7 @@
                         </div>
 
 
-                        <span class="percentage-span fw-700 ft-12">23.29%</span>
+                        <span class="percentage-span-last fw-700 ft-12">23.29%</span>
 
                     </div>
 
@@ -346,5 +342,65 @@
         /* Changed from 2 to 3 if using overlay */
     }
 </style>
+
+
+<script>
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const bricks = document.querySelectorAll(".card .brick-highlighted, .card .brick-highlighted-half");
+
+    bricks.forEach((brick) => {
+        brick.classList.add("brick-animate");
+    });
+});
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const tracks = document.querySelectorAll(".progress-track");
+        const fills = document.querySelectorAll(".progress-fill");
+        const percentageText = document.querySelector(".percentage-span-last");
+
+        const initialDelay = 1100; // delay before everything starts
+        const fillStartDelay = initialDelay + 600; // fill animation starts after bars fade in
+
+        // --- 1. INITIAL STATE FOR ALL ELEMENTS ---
+        [...tracks, percentageText].forEach((el) => {
+            if (!el) return;
+            el.style.opacity = "0";
+            el.style.transform = "translateY(20px)";
+            el.style.transition = "all 0.6s ease";
+        });
+
+        // hide fill heights for animation
+        fills.forEach((fill) => {
+            fill.dataset.finalHeight = fill.style.height; // save % value
+            fill.style.height = "0"; // start at zero
+            fill.style.opacity = "0";
+            fill.style.transform = "translateY(20px)";
+            fill.style.transition = "all 0.6s ease";
+        });
+
+        // --- 2. ANIMATE TRACKS + TEXT TOGETHER ---
+        setTimeout(() => {
+            [...tracks, percentageText].forEach((el) => {
+                if (!el) return;
+                el.style.opacity = "1";
+                el.style.transform = "translateY(0)";
+            });
+        }, initialDelay);
+
+        // --- 3. ANIMATE PROGRESS FILL (fade up + grow) ---
+        setTimeout(() => {
+            fills.forEach((fill) => {
+                fill.style.opacity = "1";
+                fill.style.transform = "translateY(0)";
+                fill.style.height = fill.dataset.finalHeight; // animate to final %
+            });
+        }, fillStartDelay);
+    });
+
+
+</script>
 
 </html>
